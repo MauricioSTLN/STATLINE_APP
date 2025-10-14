@@ -10,21 +10,14 @@ class StatLineApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const primary = Color(0xFF30B274);
-    const secondary = Color(0xFFACFFD7);
-
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'StatLine',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: primary,
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: primary,
-          secondary: secondary,
-        ),
-        scaffoldBackgroundColor: secondary,
+        primaryColor: const Color(0xFF30B274),
+        scaffoldBackgroundColor: Colors.white,
       ),
-      home: const HomePage(),
+      home: const HomeScreen(),
     );
   }
 }

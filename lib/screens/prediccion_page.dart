@@ -11,7 +11,7 @@ class PrediccionPage extends StatelessWidget {
     if (resultado.containsKey('error')) {
       return Scaffold(
         appBar: AppBar(title: const Text('Predicción'), backgroundColor: primary),
-        body: Center(child: Text('Error: ${resultado['error']}\n${resultado['body'] ?? ''}')),
+        body: Center(child: Text('Error: ${resultado['error']}')),
       );
     }
 
