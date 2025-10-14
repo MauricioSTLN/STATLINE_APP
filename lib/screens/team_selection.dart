@@ -6,169 +6,124 @@ class TeamSelectionPage extends StatefulWidget {
   const TeamSelectionPage({super.key});
 
   @override
-  _TeamSelectionPageState createState() => _TeamSelectionPageState();
+  State<TeamSelectionPage> createState() => _TeamSelectionPageState();
 }
 
 class _TeamSelectionPageState extends State<TeamSelectionPage> {
   String? equipoLocal;
   String? equipoVisitante;
-  final TextEditingController lineaController = TextEditingController();
 
-  // 🔥 Mapa entre los nombres de escudos (archivos) y los nombres del Excel
-  final Map<String, String> teamMap = {
-    "49ers": "San Francisco",
-    "bears": "Chicago",
-    "bengals": "Cincinnati",
-    "bills": "Buffalo",
-    "broncos": "Denver",
-    "browns": "Cleveland",
-    "buccaneers": "Tampa Bay",
-    "cardinals": "Arizona",
-    "chargers": "L.A. Chargers",
-    "chiefs": "Kansas City",
-    "colts": "Indianapolis",
-    "commanders": "Washington",
-    "cowboys": "Dallas",
-    "dolphins": "Miami",
-    "eagles": "Philadelphia",
-    "falcons": "Atlanta",
-    "giants": "N.Y. Giants",
-    "jaguars": "Jacksonville",
-    "jets": "N.Y. Jets",
-    "lions": "Detroit",
-    "packers": "Green Bay",
-    "panthers": "Carolina",
-    "patriots": "New England",
-    "raiders": "Las Vegas",
-    "rams": "L.A. Rams",
-    "ravens": "Baltimore",
-    "saints": "New Orleans",
-    "seahawks": "Seattle",
-    "steelers": "Pittsburgh",
-    "texans": "Houston",
-    "titans": "Tennessee",
-    "vikings": "Minnesota",
+  final Map<String, String> teamImages = {
+    "Detroit": "assets/49ers.png",
+    "Indianapolis": "assets/colts.png",
+    "Buffalo": "assets/bills.png",
+    "Dallas": "assets/cowboys.png",
+    "Seattle": "assets/seahawks.png",
+    "Baltimore": "assets/ravens.png",
+    "Tampa Bay": "assets/buccaneers.png",
+    "Washington": "assets/commanders.png",
+    "Green Bay": "assets/packers.png",
+    "Jacksonville": "assets/jaguars.png",
+    "Chicago": "assets/bears.png",
+    "Kansas City": "assets/chiefs.png",
+    "New England": "assets/patriots.png",
+    "L.A. Rams": "assets/rams.png",
+    "Minnesota": "assets/vikings.png",
+    "Pittsburgh": "assets/steelers.png",
+    "Philadelphia": "assets/eagles.png",
+    "Denver": "assets/broncos.png",
+    "N.Y. Jets": "assets/jets.png",
+    "Houston": "assets/texans.png",
+    "Miami": "assets/dolphins.png",
+    "San Francisco": "assets/49ers.png",
+    "Arizona": "assets/cardinals.png",
+    "Carolina": "assets/panthers.png",
+    "N.Y. Giants": "assets/giants.png",
+    "L.A. Chargers": "assets/chargers.png",
+    "Atlanta": "assets/falcons.png",
+    "New Orleans": "assets/saints.png",
+    "Cincinnati": "assets/bengals.png",
+    "Las Vegas": "assets/raiders.png",
+    "Cleveland": "assets/browns.png",
+    "Tennessee": "assets/titans.png",
   };
-
-  Future<void> _predecir() async {
-    if (equipoLocal == null || equipoVisitante == null || lineaController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Selecciona ambos equipos y la línea")),
-      );
-      return;
-    }
-
-    final double? linea = double.tryParse(lineaController.text);
-    if (linea == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Ingresa una línea válida")),
-      );
-      return;
-    }
-
-    try {
-      final res = await ApiService.predict(
-        local: equipoLocal!,
-        visitante: equipoVisitante!,
-        linea: linea,
-      );
-
-      if (mounted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PrediccionPage(resultado: res),
-          ),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error en la API: $e")),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    final List<String> teams = teamMap.keys.toList();
+    final Color primary = const Color(0xFF30B274);
 
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: SafeArea(
+      appBar: AppBar(title: const Text("Seleccionar Equipos"), backgroundColor: primary),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            const SizedBox(height: 10),
-            Image.asset('assets/logo.png', width: 397, height: 128),
-
-            const SizedBox(height: 20),
-
             Expanded(
               child: GridView.count(
                 crossAxisCount: 4,
-                padding: const EdgeInsets.all(8),
-                children: teams.map((team) {
-                  bool isSelected = equipoLocal == teamMap[team] || equipoVisitante == teamMap[team];
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+                children: teamImages.keys.map((team) {
+                  bool isSelected = equipoLocal == team || equipoVisitante == team;
                   return GestureDetector(
                     onTap: () {
                       setState(() {
                         if (equipoLocal == null) {
-                          equipoLocal = teamMap[team];
-                        } else if (equipoVisitante == null && equipoLocal != teamMap[team]) {
-                          equipoVisitante = teamMap[team];
-                        } else if (equipoLocal == teamMap[team]) {
+                          equipoLocal = team;
+                        } else if (equipoVisitante == null && equipoLocal != team) {
+                          equipoVisitante = team;
+                        } else if (equipoLocal == team) {
                           equipoLocal = null;
-                        } else if (equipoVisitante == teamMap[team]) {
+                        } else if (equipoVisitante == team) {
                           equipoVisitante = null;
                         }
                       });
                     },
                     child: Container(
-                      margin: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
-                        border: Border.all(
-                          color: isSelected ? Colors.green : Colors.transparent,
-                          width: 3,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: isSelected ? primary : Colors.grey, width: 2),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Image.asset("assets/${team}.png"),
+                      child: Image.asset(teamImages[team]!, fit: BoxFit.contain),
                     ),
                   );
                 }).toList(),
               ),
             ),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-              child: TextField(
-                controller: lineaController,
-                style: const TextStyle(color: Colors.white),
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: "Ingresa línea (ej. 43.5)",
-                  hintStyle: const TextStyle(color: Colors.white54),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white54),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.green),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: 350,
+              height: 100,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  padding: EdgeInsets.zero,
+                  shadowColor: Colors.transparent,
+                ),
+                onPressed: (equipoLocal != null && equipoVisitante != null)
+                    ? () async {
+                        double linea = 45.0; // ejemplo, puedes obtener de otro input
+                        final res = await ApiService.predict(
+                          local: equipoLocal!,
+                          visitante: equipoVisitante!,
+                          linea: linea,
+                        );
+                        if (!mounted) return;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => PrediccionPage(resultado: res),
+                          ),
+                        );
+                      }
+                    : null,
+                child: Ink.image(
+                  image: const AssetImage("assets/comenzar.png"),
+                  fit: BoxFit.cover,
+                  child: Container(),
                 ),
               ),
             ),
-
-            GestureDetector(
-              onTap: _predecir,
-              child: Image.asset(
-                'assets/comenzar.png',
-                width: 350,
-                height: 100,
-              ),
-            ),
-
-            const SizedBox(height: 20),
           ],
         ),
       ),
