@@ -1,25 +1,40 @@
-name: statline
-description: Una app de pronósticos deportivos
-publish_to: "none"
-version: 1.0.0+1
-
-environment:
-  sdk: ">=3.0.0 <4.0.0"
-
-dependencies:
-  flutter:
-    sdk: flutter
-  http: ^1.5.0
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^2.0.0
-
 flutter:
   uses-material-design: true
 
   assets:
-    - assets/botones/
-    - assets/escudos/
-    - assets/logo/
+    - assets/logo/logo.png
+    - assets/botones/iniciar.png
+    - assets/botones/comenzar.png
+    - assets/botones/nuevo.png
+    - assets/escudos/49ers.png
+    - assets/escudos/bears.png
+    - assets/escudos/bengals.png
+    - assets/escudos/bills.png
+    - assets/escudos/broncos.png
+    - assets/escudos/browns.png
+    - assets/escudos/buccaneers.png
+    - assets/escudos/cardinals.png
+    - assets/escudos/chargers.png
+    - assets/escudos/chiefs.png
+    - assets/escudos/colts.png
+    - assets/escudos/commanders.png
+    - assets/escudos/cowboys.png
+    - assets/escudos/dolphins.png
+    - assets/escudos/eagles.png
+    - assets/escudos/falcons.png
+    - assets/escudos/giants.png
+    - assets/escudos/jaguars.png
+    - assets/escudos/jets.png
+    - assets/escudos/lions.png
+    - assets/escudos/packers.png
+    - assets/escudos/panthers.png
+    - assets/escudos/patriots.png
+    - assets/escudos/raiders.png
+    - assets/escudos/rams.png
+    - assets/escudos/ravens.png
+    - assets/escudos/saints.png
+    - assets/escudos/seahawks.png
+    - assets/escudos/steelers.png
+    - assets/escudos/texans.png
+    - assets/escudos/titans.png
+    - assets/escudos/vikings.png

@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const TeamSelectionPage()),
                 );
               },
-              child: Image.asset('assets/comenzar.png', width: 350, height: 100),
+              child: Image.asset('assets/iniciar.png', width: 350, height: 100),
             ),
           ],
         ),
