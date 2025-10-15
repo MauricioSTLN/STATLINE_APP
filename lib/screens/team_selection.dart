@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../services/api_service.dart';  // Solo tu servicio
-import 'prediccion_page.dart';          // Página de predicción
+import '../services/api_service.dart';
+import 'prediccion_page.dart';
+
 
 class TeamSelectionPage extends StatefulWidget {
   const TeamSelectionPage({super.key});
