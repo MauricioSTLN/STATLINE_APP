@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../services/api_service.dart';
-import 'prediccion_page.dart';
+import '../services/api_service.dart';  // Solo tu servicio
+import 'prediccion_page.dart';          // Página de predicción
 
 class TeamSelectionPage extends StatefulWidget {
   const TeamSelectionPage({super.key});
@@ -51,7 +51,10 @@ class _TeamSelectionPageState extends State<TeamSelectionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Selecciona Equipos'), backgroundColor: const Color(0xFF30B274)),
+      appBar: AppBar(
+        title: const Text('Selecciona Equipos'),
+        backgroundColor: const Color(0xFF30B274),
+      ),
       body: Column(
         children: [
           Expanded(
@@ -76,13 +79,20 @@ class _TeamSelectionPageState extends State<TeamSelectionPage> {
                   child: Container(
                     margin: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      border: Border.all(color: isSelected ? Colors.green : Colors.transparent, width: 3),
+                      border: Border.all(
+                        color: isSelected ? Colors.green : Colors.transparent,
+                        width: 3,
+                      ),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Column(
                       children: [
-                        Expanded(child: Image.asset(e['asset']!)),
-                        Text(e['Team']!, textAlign: TextAlign.center, style: const TextStyle(fontSize: 12)),
+                        Expanded(child: Image.asset(e['asset']!, fit: BoxFit.contain)),
+                        Text(
+                          e['Team']!,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 12),
+                        ),
                       ],
                     ),
                   ),
@@ -97,14 +107,22 @@ class _TeamSelectionPageState extends State<TeamSelectionPage> {
                 backgroundColor: const Color(0xFF30B274),
                 minimumSize: const Size.fromHeight(60),
               ),
-              onPressed: (local != null && visitante != null) ? () async {
-                final res = await ApiService.predict(local: local!, visitante: visitante!, linea: 45.0);
-                if (!mounted) return;
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => PrediccionPage(resultado: res)),
-                );
-              } : null,
+              onPressed: (local != null && visitante != null)
+                  ? () async {
+                      final res = await ApiService.predict(
+                        local: local!,
+                        visitante: visitante!,
+                        linea: 45.0,
+                      );
+                      if (!mounted) return;
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => PrediccionPage(resultado: res),
+                        ),
+                      );
+                    }
+                  : null,
               child: Image.asset('assets/comenzar.png', width: 350, height: 100),
             ),
           ),
